@@ -2,25 +2,29 @@
 ![Alt text](image.png)
 
 ### 安装/install:
-下载当前目录到任意路径, 比如: /home/nujnus/workspace/aiansible
+- (1) **下载当前目录到任意路径, 比如: /home/nujnus/workspace/aiansible**
 
-创建一个:debug.cfg
+- (2) **安装依赖:**
+```
+pip install  -r requirements.txt
+```
+
+- (3) **创建一个:debug.cfg**
 ```
 [defaults]
 callback_plugins = /home/nujnus/workspace/aiansible
 callbacks_enabled = aiansible.py
 ```
-### 设置环境变量:
+- (4) **设置环境变量:**
 ```
 export OPENAI_API_URL=https://api.moonshot.cn/v1  #或者其他兼容openai的api地址
 export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #或者其他兼容openai的key
 export ANSIBLE_CONFIG=./debug.cfg
 ```
-### 运行命令/run command:
+- (5) **运行命令/run command:**
 ```
 ansible-playbook  xxx_playbook.yml
 ```
-
 
 
 # 以调试kubespray未例:

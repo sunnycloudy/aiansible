@@ -1,0 +1,5 @@
+prompt-toolkit==3.0.43
+ansible==5.10.0
+ansible-core==2.12.10
+ansible-runner==2.3.6
+openai==1.30.1
