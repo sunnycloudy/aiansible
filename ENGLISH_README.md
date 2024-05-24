@@ -70,7 +70,7 @@ ansible-playbook  xxx_playbook.yml
 kubespray/ansible.cfg
 ```
 
-### modify kubespray/ansible.cfg:
+### edit kubespray default ansible.cfg:
 ```
 [ssh_connection]
 pipelining=True

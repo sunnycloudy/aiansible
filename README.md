@@ -64,13 +64,13 @@ ansible-playbook  xxx_playbook.yml
 ```
 
 
-## 以调试kubespray未例:
+## 以调试kubespray为例:
 ```
 # 先找到
 kubespray/ansible.cfg
 ```
 
-### 看到配置:
+### 更改kubespray默认配置:
 ```
 [ssh_connection]
 pipelining=True
