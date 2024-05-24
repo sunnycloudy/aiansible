@@ -6,7 +6,7 @@
   
   可能是市面上第二款ansible调试器
   可能是市面上第一款非嵌入式的ansible调试器
-  市面上第一款带ai提示功能的ansible调试器
+  应该是市面上第一款带ai提示功能的ansible调试器
 
 
 ## 基本使用说明/basic usage:
