@@ -104,7 +104,7 @@ ignore_patterns = artifacts, credentials
 ```
 export OPENAI_API_URL=https://api.moonshot.cn/v1  #或者其他兼容openai的api地址
 export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #或者其他兼容openai的key
-export ANSIBLE_CONFIG=./debug.cfg
+export ANSIBLE_CONFIG=./ansible.cfg
 ansible-playbook  --become  -i  inventory/mycluster/inventory.ini  cluster.yml
 ```
 ![Alt text](image-1.png)
