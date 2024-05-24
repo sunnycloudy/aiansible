@@ -1,4 +1,5 @@
 # aiansible:
+[切换到中文](./README.md)
 
   调试ansible, 并通过chatgpt or kimi注释和提示错误的解决办法.
 
