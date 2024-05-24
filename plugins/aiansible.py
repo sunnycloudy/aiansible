@@ -475,7 +475,7 @@ class CallbackModule(CallbackBase):
 
                 # 定义样式
                 style = Style.from_dict({
-                    'prompt': 'bg:#ff0000 #ffff00',  # 背景颜色设置为红色，文字颜色设置为黄色
+                    'prompt': 'fg:ansiyellow',  # 使用 ANSI 颜色名称
                     # 可以添加更多的样式设置
                 })
 
