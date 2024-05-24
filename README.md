@@ -70,3 +70,22 @@ export ANSIBLE_CONFIG=./debug.cfg
 ansible-playbook  --become  -i  inventory/mycluster/inventory.ini  cluster.yml
 ```
 ![Alt text](image-1.png)
+
+# 基本使用说明/basic usage:
+```
+i              对当前执行的任务代码进行注释
+ir             在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进
+ask            请根据当前ansible任务:回答之后的问题
+n    next      运行下一个任务
+m              不再在紧接着的同一个任务处停留
+c    continue  继续运行直到下一个断点
+b              创建断点
+p              查看已经创建的断点
+d    delete    删除断点
+bt             查看已经运行过哪些任务了
+code           查看正在运行的任务
+v              用vscode打开对应文件
+a    arg       查看所有参数, 或单个参数 (在任务没有被skipped的前提下)
+?    help      查看使用说明
+exit           退出
+```
