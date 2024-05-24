@@ -33,12 +33,12 @@ exit           退出
 ## ai提示效果/example:
 ![Alt text](image.png)
 
-### 安装/install:
-- (1) **下载当前目录到任意路径, 比如: ~/.aiansible_plugin**
+### 安装并开始使用 :
+- (1) **下载和安装:**
 ```
   git clone https://github.com/sunnycloudy/aiansible.git
   cd aiansible
-  pip install .
+  pip install .  #=> 会生成插件目录: ~/.aiansible_plugin
 ```
 
 - (2) **安装依赖:**

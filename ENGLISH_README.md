@@ -32,39 +32,45 @@ exit           Exit
 ## ai提示效果/ai prompt example:
 ![Alt text](image.png)
 
-### 安装/install:
-- (1) **下载当前目录到任意路径, 比如: ~/.aiansible_plugin**
+### install and start using aiansible:
+- (1) **download and install**
+```
+  git clone https://github.com/sunnycloudy/aiansible.git
+  cd aiansible
+  pip install .  #=> will generate dir: ~/.aiansible_plugin
+```
 
-- (2) **安装依赖:**
+
+- (2) **install dependents:**
 ```
 pip install  -r requirements.txt
 ```
 
-- (3) **创建一个:debug.cfg**
+- (3) **create a:debug.cfg**
 ```
 [defaults]
 callback_plugins = ~/.aiansible_plugin
 callbacks_enabled = aiansible.py
 ```
-- (4) **设置环境变量:**
+- (4) **set environments:**
 ```
 export OPENAI_API_URL=https://api.moonshot.cn/v1  #或者其他兼容openai的api地址
 export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #或者其他兼容openai的key
 export ANSIBLE_CONFIG=./debug.cfg
 ```
-- (5) **运行命令/run command:**
+- (5) **run command:**
 ```
 ansible-playbook  xxx_playbook.yml
 ```
 
 
-## 以调试kubespray未例:
+## kubespray example:
 ```
-# 先找到
+# find
 kubespray/ansible.cfg
 ```
 
-### 修改配置:modify kubespray/ansible.cfg:
+### modify kubespray/ansible.cfg:
 ```
 [ssh_connection]
 pipelining=True
@@ -94,7 +100,7 @@ ignore_patterns = artifacts, credentials
 
 ```
 
-### 运行命令/run command:
+### run command:
 ```
 export OPENAI_API_URL=https://api.moonshot.cn/v1  #或者其他兼容openai的api地址
 export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #或者其他兼容openai的key
