@@ -81,9 +81,9 @@ fact_caching_timeout = 86400
 stdout_callback = default
 display_skipped_hosts = no
 library = ./library
-# callbacks_enabled = profile_tasks,ara_default      #<= 注释掉   (･ω･)ﾉ
-callback_plugins = /home/nujnus/workspace/aiansible  #<=  新添加的 (｡･ω･｡)ﾉ
-callbacks_enabled = aiansible.py                     #<=  新添加的 ( ・ω・ )ノ
+# callbacks_enabled = profile_tasks,ara_default      #<= comment it   (･ω･)ﾉ
+callback_plugins = /home/nujnus/workspace/aiansible  #<=  new line (｡･ω･｡)ﾉ
+callbacks_enabled = aiansible.py                     #<=  new line ( ・ω・ )ノ
 
 roles_path = roles:$VIRTUAL_ENV/usr/local/share/kubespray/roles:$VIRTUAL_ENV/usr/local/share/ansible/roles:/usr/share/kubespray/roles
 deprecation_warnings=False
