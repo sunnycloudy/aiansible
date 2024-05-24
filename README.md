@@ -34,7 +34,12 @@ exit           退出
 ![Alt text](image.png)
 
 ### 安装/install:
-- (1) **下载当前目录到任意路径, 比如: /home/nujnus/workspace/aiansible**
+- (1) **下载当前目录到任意路径, 比如: ~/.aiansible_plugin**
+```
+  git clone https://github.com/sunnycloudy/aiansible.git
+  cd aiansible
+  pip install .
+```
 
 - (2) **安装依赖:**
 ```
@@ -44,7 +49,7 @@ pip install  -r requirements.txt
 - (3) **创建一个:debug.cfg**
 ```
 [defaults]
-callback_plugins = /home/nujnus/workspace/aiansible
+callback_plugins = ~/.aiansible_plugin
 callbacks_enabled = aiansible.py
 ```
 - (4) **设置环境变量:**
@@ -84,7 +89,7 @@ stdout_callback = default
 display_skipped_hosts = no
 library = ./library
 # callbacks_enabled = profile_tasks,ara_default      #<= 注释掉   (･ω･)ﾉ
-callback_plugins = /home/nujnus/workspace/aiansible  #<=  新添加的 (｡･ω･｡)ﾉ
+callback_plugins = ~/.aiansible_plugin               #<=  新添加的 (｡･ω･｡)ﾉ
 callbacks_enabled = aiansible.py                     #<=  新添加的 ( ・ω・ )ノ
 
 roles_path = roles:$VIRTUAL_ENV/usr/local/share/kubespray/roles:$VIRTUAL_ENV/usr/local/share/ansible/roles:/usr/share/kubespray/roles
