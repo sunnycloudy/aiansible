@@ -321,8 +321,6 @@ class CallbackModule(CallbackBase):
         path, lineno, pathspec = self.get_path(self.nujnus_task)
         task_name = self.nujnus_task.get_name()
 
-        self.nujnus_task_path_list.append((pathspec, task_name))
-
         # Get task file
         # task_file = self._get_or_create_file(path)
         self._display.display(msg="DEBUG INFO:", color=C.COLOR_DEBUG)
