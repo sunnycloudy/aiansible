@@ -1,33 +1,31 @@
 # aiansible:
-[Link to ENGLISH README](./ENGLISH_README.md)
-
 
   调试ansible, 并通过chatgpt or kimi注释和提示错误的解决办法.
 
   Debug Ansible, and use chatgpt or kimi AI annotations and hints to resolve errors.
   
-   - 可能是市面上第二款ansible调试器
-   - 可能是市面上第一款非嵌入式的ansible调试器
-   - 应该是市面上第一款带ai提示功能的ansible调试器
+  - "It may be the second Ansible debugger on the market."
+  - "It may be the first non-embedded Ansible debugger on the market."
+  - "It should be the first Ansible debugger on the market with AI hinting features."
 
 
 ## 基本使用说明/basic usage:
 ```
-i              对当前执行的任务代码进行注释
-ir             在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进
-ask            请根据当前ansible任务:回答问题
-n    next      运行下一个任务
-m              不再在紧接着的同一个任务处停留
-c    continue  继续运行直到下一个断点
-b              创建断点
-p              查看已经创建的断点
-d    delete    删除断点
-bt             查看已经运行过哪些任务了
-code           查看正在运行的任务
-v              用vscode打开对应文件
-a    arg       查看所有参数, 或单个参数 (在任务没有被skipped的前提下)
-?    help      查看使用说明
-exit           退出
+i              Comment on the current task's code being executed
+ir             In the same line after each line of code, comment on the following code, analyze the reason for the execution result, and then tell me how to improve
+ask            Please answer questions based on the current Ansible task
+n    next      Run the next task
+m              Do not stay at the same task immediately after this one
+c    continue  Continue running until the next breakpoint
+b              Create a breakpoint
+p              View existing breakpoints
+d    delete    Delete a breakpoint
+bt             View the tasks that have already been executed
+code           View the currently running task
+v              Open the corresponding file with Visual Studio Code
+a    arg       View all arguments, or a single argument (provided the task has not been skipped)
+?    help      View the usage instructions
+exit           Exit
 ```
 
 ## 使用效果/example:
@@ -65,7 +63,7 @@ ansible-playbook  xxx_playbook.yml
 kubespray/ansible.cfg
 ```
 
-### 看到配置:
+### 修改配置:modify kubespray/ansible.cfg:
 ```
 [ssh_connection]
 pipelining=True
