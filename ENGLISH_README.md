@@ -29,7 +29,7 @@ a    arg       View all arguments, or a single argument (provided the task has n
 exit           Exit
 ```
 
-## 使用效果/example:
+## ai提示效果/ai prompt example:
 ![Alt text](image.png)
 
 ### 安装/install:

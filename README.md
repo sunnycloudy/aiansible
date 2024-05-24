@@ -30,7 +30,7 @@ a    arg       查看所有参数, 或单个参数 (在任务没有被skipped的
 exit           退出
 ```
 
-## 使用效果/example:
+## ai提示效果/example:
 ![Alt text](image.png)
 
 ### 安装/install:
