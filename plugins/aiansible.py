@@ -599,6 +599,9 @@ class CallbackModule(CallbackBase):
                         break
                     elif action.lower() == "?" or action.lower() == "help":
                         help = """
+i              对当前执行的任务代码进行注释
+ir             在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进
+ask            请根据当前ansible任务:回答问题
 n    next      运行下一个任务
 m              不再在紧接着的同一个任务处停留
 c    continue  继续运行直到下一个断点
