@@ -11,6 +11,8 @@ from prompt_toolkit import prompt
 from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit import PromptSession
 from prompt_toolkit.enums import EditingMode
+from prompt_toolkit.styles import Style
+
 import re
 import json
 
@@ -471,9 +473,15 @@ class CallbackModule(CallbackBase):
                 # 确保在调用input之前flush输出，以避免输出顺序问题
                 sys.stdout.flush()
 
+                # 定义样式
+                style = Style.from_dict({
+                    'prompt': 'bg:#ff0000 #ffff00',  # 背景颜色设置为红色，文字颜色设置为黄色
+                    # 可以添加更多的样式设置
+                })
+
                 # 创建 PromptSession 实例，设置编辑模式为 VI 并传入历史记录对象, 支持上下自动填入历史的功能
                 session = PromptSession(
-                    editing_mode=EditingMode.VI, history=CallbackModule.history
+                    editing_mode=EditingMode.VI, history=CallbackModule.history, style=style
                 )
 
                 # context = {"__builtins__": __builtins__, "result": result, "self": self}
