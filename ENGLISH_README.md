@@ -114,8 +114,8 @@ ignore_patterns = artifacts, credentials
 ### run command:
 ```
 export AIANSIBLE_LANG=EN
-export OPENAI_API_URL=https://api.moonshot.cn/v1  #或者其他兼容openai的api地址
-export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #或者其他兼容openai的key
+export OPENAI_API_URL=https://api.moonshot.cn/v1  #Or other API addresses compatible with OpenAI.
+export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #Or other keys compatible with OpenAI.
 export ANSIBLE_CONFIG=./ansible.cfg
 ansible-playbook  --become  -i  inventory/mycluster/inventory.ini  cluster.yml
 ```
