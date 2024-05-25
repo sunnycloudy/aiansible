@@ -118,3 +118,9 @@ ansible-playbook  --become  -i  inventory/mycluster/inventory.ini  cluster.yml
 ```
 ![Alt text](image-1.png)
 
+### edit mode:support emacs-mode or vim-mode, default is emacs-mode
+```
+export AIANSIBLE_EDITMODE=vi
+#或
+export AIANSIBLE_EDITMODE=emacs
+```

@@ -118,3 +118,10 @@ ansible-playbook  --become  -i  inventory/mycluster/inventory.ini  cluster.yml
 ```
 ![Alt text](image-1.png)
 
+
+### 编辑模式:emacs模式和支持vim模式, 默认为emacs模式
+```
+export AIANSIBLE_EDITMODE=vi
+#或
+export AIANSIBLE_EDITMODE=emacs
+```

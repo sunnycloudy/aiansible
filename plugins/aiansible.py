@@ -12,6 +12,9 @@ from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit import PromptSession
 from prompt_toolkit.enums import EditingMode
 from prompt_toolkit.styles import Style
+from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.keys import Keys
+
 
 import re
 import json
@@ -108,6 +111,7 @@ class CallbackModule(CallbackBase):
         self.nujnus_task_path_list = []
         # 读取断点清单文件
         self.break_list_file_path = os.environ.get("BREAK_LIST_FILE_PATH")
+        self.AIANSIBLE_EDITMODE = os.environ.get("AIANSIBLE_EDITMODE")
         self.aiansible_lang = os.environ.get("AIANSIBLE_LANG")
         if not self.aiansible_lang:
             self.aiansible_lang = "CN"
@@ -559,11 +563,24 @@ class CallbackModule(CallbackBase):
                 )
 
                 # 创建 PromptSession 实例，设置编辑模式为 VI 并传入历史记录对象, 支持上下自动填入历史的功能
-                session = PromptSession(
-                    editing_mode=EditingMode.VI,
-                    history=CallbackModule.history,
-                    style=style,
-                )
+                if self.AIANSIBLE_EDITMODE == "vi":
+                    session = PromptSession(
+                        editing_mode=EditingMode.VI,
+                        history=CallbackModule.history,
+                        style=style,
+                    )
+                elif self.AIANSIBLE_EDITMODE == "emacs":
+                    session = PromptSession(
+                        editing_mode=EditingMode.EMACS,
+                        history=CallbackModule.history,
+                        style=style,
+                    )
+                else:
+                    session = PromptSession(
+                        editing_mode=EditingMode.EMACS,
+                        history=CallbackModule.history,
+                        style=style,
+                    )
 
                 # context = {"__builtins__": __builtins__, "result": result, "self": self}
                 context = {
