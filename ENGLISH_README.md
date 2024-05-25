@@ -29,8 +29,14 @@ a    arg       View all arguments, or a single argument (provided the task has n
 exit           Exit
 ```
 
-## ai提示效果/ai prompt example:
-![Alt text](image.png)
+## ai prompt example:
+If you want to use English:
+```
+export AIANSIBLE_LANG=EN
+```
+![Alt text](image-3.png)
+
+
 
 ### install and start using aiansible:
 - (1) **download and install**
@@ -102,6 +108,7 @@ ignore_patterns = artifacts, credentials
 
 ### run command:
 ```
+export AIANSIBLE_LANG=EN
 export OPENAI_API_URL=https://api.moonshot.cn/v1  #或者其他兼容openai的api地址
 export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #或者其他兼容openai的key
 export ANSIBLE_CONFIG=./ansible.cfg

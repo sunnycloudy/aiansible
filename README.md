@@ -31,7 +31,14 @@ exit           退出
 ```
 
 ## ai提示效果/example:
-![Alt text](image.png)
+默认是中文版,中文版效果: 
+![Alt text](image-2.png)
+如果要设置成英文版:
+```
+export AIANSIBLE_LANG=EN
+```
+![Alt text](image-3.png)
+
 
 ### 安装并开始使用 :
 - (1) **下载和安装:**
