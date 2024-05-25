@@ -12,19 +12,21 @@
 
 ## 基本使用说明/basic usage:
 ```
-i              Comment on the current task's code being executed
-ir             In the same line after each line of code, comment on the following code, analyze the reason for the execution result, and then tell me how to improve
+LCN            Set the language to Chinese
+LEN            Set the language to English
+i              Annotate the code of the currently executing task
+ir             Annotate the code of the currently executing task, analyze the results, and provide suggestions for improvement
 ask            Please answer questions based on the current Ansible task
 n    next      Run the next task
-m              Do not stay at the same task immediately after this one
+m              Do not stay at the same task again immediately
 c    continue  Continue running until the next breakpoint
 b              Create a breakpoint
-p              View existing breakpoints
+p              View created breakpoints
 d    delete    Delete a breakpoint
-bt             View the tasks that have already been executed
-code           View the currently running task
-v              Open the corresponding file with Visual Studio Code
-a    arg       View all arguments, or a single argument (provided the task has not been skipped)
+bt             View which tasks have been run
+code           View the code of the currently running task
+v              Open the corresponding file with VSCode
+a    arg       View all arguments, or a single argument (assuming the task has not been skipped)
 ?    help      View the usage instructions
 exit           Exit
 ```
