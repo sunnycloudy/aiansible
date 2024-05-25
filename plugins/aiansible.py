@@ -26,6 +26,23 @@ RED = "\033[91m"
 BLUE = "\033[34m"
 YELLOW = "\033[93m"
 RESET = "\033[0m"
+HELP = """
+i              对当前执行的任务代码进行注释
+ir             在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进
+ask            请根据当前ansible任务:回答问题
+n    next      运行下一个任务
+m              不再在紧接着的同一个任务处停留
+c    continue  继续运行直到下一个断点
+b              创建断点
+p              查看已经创建的断点
+d    delete    删除断点
+bt             查看已经运行过哪些任务了
+code           查看正在运行的任务
+v              用vscode打开对应文件
+a    arg       查看所有参数, 或单个参数 (在任务没有被skipped的前提下)
+?    help      查看使用说明
+exit           退出
+"""
 
 
 def colorize_code(code):
@@ -472,14 +489,18 @@ class CallbackModule(CallbackBase):
                 sys.stdout.flush()
 
                 # 定义样式
-                style = Style.from_dict({
-                    'prompt': 'fg:ansiyellow',  # 使用 ANSI 颜色名称
-                    # 可以添加更多的样式设置
-                })
+                style = Style.from_dict(
+                    {
+                        "prompt": "fg:ansiyellow",  # 使用 ANSI 颜色名称
+                        # 可以添加更多的样式设置
+                    }
+                )
 
                 # 创建 PromptSession 实例，设置编辑模式为 VI 并传入历史记录对象, 支持上下自动填入历史的功能
                 session = PromptSession(
-                    editing_mode=EditingMode.VI, history=CallbackModule.history, style=style
+                    editing_mode=EditingMode.VI,
+                    history=CallbackModule.history,
+                    style=style,
                 )
 
                 # context = {"__builtins__": __builtins__, "result": result, "self": self}
@@ -604,23 +625,7 @@ class CallbackModule(CallbackBase):
                         self.continue_flag = True
                         break
                     elif action.lower() == "?" or action.lower() == "help":
-                        help = """
-i              对当前执行的任务代码进行注释
-ir             在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进
-ask            请根据当前ansible任务:回答问题
-n    next      运行下一个任务
-m              不再在紧接着的同一个任务处停留
-c    continue  继续运行直到下一个断点
-b              创建断点
-p              查看已经创建的断点
-d    delete    删除断点
-bt             查看已经运行过哪些任务了
-code           查看正在运行的任务
-v              用vscode打开对应文件
-a    arg       查看所有参数, 或单个参数 (在任务没有被skipped的前提下)
-?    help      查看使用说明
-exit           退出
-                        """
+                        help = HELP
                         print(help)
                     # elif action.lower() == "rc":
                     #    try:
