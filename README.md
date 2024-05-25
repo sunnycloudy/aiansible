@@ -119,8 +119,11 @@ ignore_patterns = artifacts, credentials
 
 ### 运行命令/run command:
 ```
+ # 如果不设置就没有ai提示功能, 但依然能调试.
 export OPENAI_API_URL=https://api.moonshot.cn/v1  #或者其他兼容openai的api地址
 export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #或者其他兼容openai的key
+
+# 开始调试:
 export ANSIBLE_CONFIG=./ansible.cfg
 ansible-playbook  --become  -i  inventory/mycluster/inventory.ini  cluster.yml
 ```
