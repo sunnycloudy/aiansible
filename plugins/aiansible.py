@@ -46,6 +46,26 @@ a    arg       查看所有参数, 或单个参数 (在任务没有被skipped的
 exit           退出
 """
 
+ENGLISH_HELP = """
+LCN            Set the language to Chinese
+LEN            Set the language to English
+i              Annotate the code of the currently executing task
+ir             Annotate the code of the currently executing task, analyze the results, and provide suggestions for improvement
+ask            Please answer questions based on the current Ansible task
+n    next      Run the next task
+m              Do not stay at the same task again immediately
+c    continue  Continue running until the next breakpoint
+b              Create a breakpoint
+p              View created breakpoints
+d    delete    Delete a breakpoint
+bt             View which tasks have been run
+code           View the code of the currently running task
+v              Open the corresponding file with VSCode
+a    arg       View all arguments, or a single argument (assuming the task has not been skipped)
+?    help      View the usage instructions
+exit           Exit
+"""
+
 
 def colorize_code(code):
     # 正则表达式匹配以 # 开头的单行注释
@@ -156,7 +176,6 @@ class CallbackModule(CallbackBase):
                 "用中文, 在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进(注意:除此之外,不需要额外说明 ):",
                 "\n运行结果为:",
             )
-
 
     def chat(self, query, history):
         self.chat_history.append({"role": "user", "content": query})
@@ -303,7 +322,6 @@ class CallbackModule(CallbackBase):
         task_name = self.nujnus_task.get_name()
 
         self.nujnus_task_path_list.append((pathspec, task_name))
-
 
     def ask_code_comment(self):
 
@@ -669,7 +687,12 @@ class CallbackModule(CallbackBase):
                         self.continue_flag = True
                         break
                     elif action.lower() == "?" or action.lower() == "help":
-                        help = HELP
+                        if self.aiansible_lang == "CN":
+                            help = HELP
+                        elif self.aiansible_lang == "EN":
+                            help = ENGLISH_HELP
+                        else:
+                            help = HELP
                         print(help)
                     # elif action.lower() == "rc":
                     #    try:
