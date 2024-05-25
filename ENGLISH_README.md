@@ -72,8 +72,11 @@ callbacks_enabled = aiansible.py
 ```
 - (4) **set environments:**
 ```
+# If it's not necessary to use AI, you can choose not to set following variable:
 export OPENAI_API_URL=https://api.moonshot.cn/v1  #Or other API addresses compatible with OpenAI.
 export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #Or other keys compatible with OpenAI.
+
+# Configure the plugin in the debug.cfg file.
 export ANSIBLE_CONFIG=./debug.cfg
 ```
 - (5) **run command:**

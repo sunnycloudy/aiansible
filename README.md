@@ -71,8 +71,11 @@ callbacks_enabled = aiansible.py
 ```
 - (4) **设置环境变量:**
 ```
+# 可选的两个变量, 如果不设置就没有ai提示功能, 但依然能调试.
 export OPENAI_API_URL=https://api.moonshot.cn/v1  #或者其他兼容openai的api地址
 export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #或者其他兼容openai的key
+
+# 在debug.cfg中配置好插件
 export ANSIBLE_CONFIG=./debug.cfg
 ```
 - (5) **运行命令/run command:**
