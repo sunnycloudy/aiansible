@@ -539,7 +539,7 @@ class CallbackModule(CallbackBase):
                     args = []
                     # 使用 prompt 函数读取用户输入，提供历史记录功能
                     # user_input = prompt("Aiansible => ", history=history)
-                    user_input = session.prompt("Aiansible => ")
+                    user_input = session.prompt(f"Aiansible({self.aiansible_lang}) => ")
                     # 执行输入的 Python 代码
                     # exec(user_input)
                     _user_input = user_input.split()
