@@ -5,11 +5,6 @@
 
   Debug Ansible, and use chatgpt or kimi AI annotations and hints to resolve errors.
   
-  - "It may be the first non-embedded Ansible debugger on the market."
-  - "It should be the first Ansible debugger on the market with AI hinting features."
-  - "It may be the second Ansible debugger on the market that truly provides breakpoint debugging capabilities."
-
-
 ## 基本使用说明/basic usage:
 ```
 :cn            Set the language to Chinese
