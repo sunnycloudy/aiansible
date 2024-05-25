@@ -86,6 +86,9 @@ class CallbackModule(CallbackBase):
         self.nujnus_task_path_list = []
         # 读取断点清单文件
         self.break_list_file_path = os.environ.get("BREAK_LIST_FILE_PATH")
+        self.aiansible_lang = os.environ.get("AIANSIBLE_LANG")
+        if not self.aiansible_lang:
+            self.aiansible_lang = "CN"
         if not self.break_list_file_path:
             self.break_list_file_path = "./breaklist.yml"
         self.output_point_list_file_path = os.environ.get("OUTPUT_POINT_LIST_FILE_PATH")
@@ -262,6 +265,15 @@ class CallbackModule(CallbackBase):
 
         self.nujnus_task_path_list.append((pathspec, task_name))
 
+    def get_ask_prompt(self):
+        print(self.aiansible_lang)
+        if self.aiansible_lang == "CN":
+            return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
+        elif self.aiansible_lang == "EN":
+            return "In English, in the same line as each line of code, comment on the following code (Note: No additional explanation is needed except for this):"
+        else:
+            return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
+
     def ask_code_comment(self):
 
         path, lineno, pathspec = self.get_path(self.nujnus_task)
@@ -271,7 +283,7 @@ class CallbackModule(CallbackBase):
             with open(file_path, "r") as file:
                 lines = file.readlines()
                 total_lines = len(lines)
-                msg = "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
+                msg = self.get_ask_prompt()
                 if start_line <= total_lines:
                     for i in range(start_line - 1, min(start_line + 9, total_lines)):
                         line_number_info = f"{i+1}".rjust(5, " ") + "|"
