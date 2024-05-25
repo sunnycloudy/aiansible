@@ -271,7 +271,7 @@ class CallbackModule(CallbackBase):
         if self.aiansible_lang == "CN":
             return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
         elif self.aiansible_lang == "EN":
-            return "In English, in the same line as each line of code, comment on the following code (Note: No additional explanation is needed except for this):"
+            return "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code.  (Note: No additional explanation is needed except for this):"
         else:
             return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
 
