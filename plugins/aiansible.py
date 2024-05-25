@@ -269,7 +269,9 @@ class CallbackModule(CallbackBase):
 
     def get_comment_prompt(self):
         if self.aiansible_lang == "CN":
-            return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
+            return (
+                "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):",
+            )
         elif self.aiansible_lang == "EN":
             return "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code.  (Note: No additional explanation is needed except for this):"
         else:
@@ -285,6 +287,23 @@ class CallbackModule(CallbackBase):
             )
         else:
             return "请根据当前ansible任务:", "回答如下问题:"
+
+    def get_result_prompt(self):
+        if self.aiansible_lang == "CN":
+            return (
+                "用中文, 在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进(注意:除此之外,不需要额外说明 ):",
+                "\n运行结果为:",
+            )
+        elif self.aiansible_lang == "EN":
+            return (
+                "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code, and then analyze the reasons for the results of the task , in the end tell me how to improve. (Note: No additional explanation is needed except for this):",
+                "\nresults of the task is:",
+            )
+        else:
+            return (
+                "用中文, 在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进(注意:除此之外,不需要额外说明 ):",
+                "\n运行结果为:",
+            )
 
     def ask_code_comment(self):
 
@@ -336,13 +355,13 @@ class CallbackModule(CallbackBase):
             with open(file_path, "r") as file:
                 lines = file.readlines()
                 total_lines = len(lines)
-                msg = "用中文, 在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进(注意:除此之外,不需要额外说明 ):"
+                msg, result_prompt = self.get_result_prompt()
                 if start_line <= total_lines:
                     for i in range(start_line - 1, min(start_line + 9, total_lines)):
                         line_number_info = f"{i+1}".rjust(5, " ") + "|"
                         msg += line_number_info + lines[i]
                     msg += (
-                        "\n运行结果为:" + str(self.result_history[-1][1]._result)
+                        result_prompt + str(self.result_history[-1][1]._result)
                         if len(self.result_history) > 0
                         else None
                     )
