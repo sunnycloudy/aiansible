@@ -31,6 +31,11 @@ a    arg       查看所有参数, 或单个参数 (在任务没有被skipped的
 ?    help      查看使用说明
 exit           退出
 ```
+### 查看每个任务的运行结果:
+```
+Aiansible(CN) => result._result
+{'msg': 'Check roles/kubespray-defaults/defaults/main.yml', '_ansible_verbose_always': True, '_ansible_no_log': False, 'changed': False}
+```
 
 ## ai提示效果/example:
 默认是中文版,中文版效果: 
