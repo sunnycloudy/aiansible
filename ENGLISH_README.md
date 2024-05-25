@@ -86,7 +86,7 @@ ansible-playbook  xxx_playbook.yml
 ---
 # demo:
 
-## kubespray example:
+## debug kubespray:
 ```
 # find
 kubespray/ansible.cfg
