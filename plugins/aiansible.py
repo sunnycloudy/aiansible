@@ -133,17 +133,23 @@ class CallbackModule(CallbackBase):
         # 记录要跳过的同名的任务
         self.move_on_at_task = None
 
-        self.ai_client = OpenAI(
-            api_key=os.environ.get("OPENAI_API_KEY"),
-            base_url=os.environ.get("OPENAI_API_URL"),
-        )
-        self.chat_context = {
-            "role": "system",
-            "content": "你是 commentator，你更擅长中文和英文的对话。你会为用户提供安全，有帮助，准确的回答。",  # 你会根据用户给出的代码, 在用户给出的代码之后写出用中文进行的注释, 你会将用户给出的代码 和你的注释合并在一起.
-        }
+        api_key = os.environ.get("OPENAI_API_KEY")
+        base_url = os.environ.get("OPENAI_API_URL")
+        if api_key == None or base_url == None:
+            self.enable_ai = False
+        else:
+            self.enable_ai = True
+            self.ai_client = OpenAI(
+                api_key=os.environ.get("OPENAI_API_KEY"),
+                base_url=os.environ.get("OPENAI_API_URL"),
+            )
+            self.chat_context = {
+                "role": "system",
+                "content": "你是 commentator，你更擅长中文和英文的对话。你会为用户提供安全，有帮助，准确的回答。",  # 你会根据用户给出的代码, 在用户给出的代码之后写出用中文进行的注释, 你会将用户给出的代码 和你的注释合并在一起.
+            }
 
-        self.chat_history = []
-        self.chat_history.append(self.chat_context)
+            self.chat_history = []
+            self.chat_history.append(self.chat_context)
 
     def get_comment_prompt(self):
         if self.aiansible_lang == "CN":
@@ -328,76 +334,89 @@ class CallbackModule(CallbackBase):
         self.nujnus_task_path_list.append((pathspec, task_name))
 
     def ask_code_comment(self):
+        if self.enable_ai:
 
-        path, lineno, pathspec = self.get_path(self.nujnus_task)
-        file_path, start_line, color = path, lineno, C.COLOR_DEBUG
+            path, lineno, pathspec = self.get_path(self.nujnus_task)
+            file_path, start_line, color = path, lineno, C.COLOR_DEBUG
 
-        try:
-            with open(file_path, "r") as file:
-                lines = file.readlines()
-                total_lines = len(lines)
-                msg = self.get_comment_prompt()
-                if start_line <= total_lines:
-                    for i in range(start_line - 1, min(start_line + 9, total_lines)):
-                        line_number_info = f"{i+1}".rjust(5, " ") + "|"
-                        msg += line_number_info + lines[i]
-                    print(colorize_code(self.chat(msg, self.chat_history)))
-                else:
-                    warning = (
-                        "Start line exceeds the total number of lines in the file."
-                    )
-                    self._display.display(msg=warning, color=C.COLOR_WARN)
+            try:
+                with open(file_path, "r") as file:
+                    lines = file.readlines()
+                    total_lines = len(lines)
+                    msg = self.get_comment_prompt()
+                    if start_line <= total_lines:
+                        for i in range(
+                            start_line - 1, min(start_line + 9, total_lines)
+                        ):
+                            line_number_info = f"{i+1}".rjust(5, " ") + "|"
+                            msg += line_number_info + lines[i]
+                        print(colorize_code(self.chat(msg, self.chat_history)))
+                    else:
+                        warning = (
+                            "Start line exceeds the total number of lines in the file."
+                        )
+                        self._display.display(msg=warning, color=C.COLOR_WARN)
 
-        except FileNotFoundError:
-            print("File not found.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
+            except FileNotFoundError:
+                print("File not found.")
+            except Exception as e:
+                print(f"An error occurred: {e}")
+        else:
+            print("Env variables OPENAI_API_KEY or OPENAI_API_URL not set")
 
     def ask(self, user_input):
-        path, lineno, pathspec = self.get_path(self.nujnus_task)
-        file_path, start_line, color = path, lineno, C.COLOR_DEBUG
+        if self.enable_ai:
+            path, lineno, pathspec = self.get_path(self.nujnus_task)
+            file_path, start_line, color = path, lineno, C.COLOR_DEBUG
 
-        try:
-            with open(file_path, "r") as file:
-                content = file.read()
-                pre_prompt, post_prompt = self.get_ask_prompt()
-                msg = f"{pre_prompt}\n{content}\n{post_prompt}{user_input}"
-                print(colorize_code(self.chat(msg, self.chat_history)))
+            try:
+                with open(file_path, "r") as file:
+                    content = file.read()
+                    pre_prompt, post_prompt = self.get_ask_prompt()
+                    msg = f"{pre_prompt}\n{content}\n{post_prompt}{user_input}"
+                    print(colorize_code(self.chat(msg, self.chat_history)))
 
-        except FileNotFoundError:
-            print("File not found.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
+            except FileNotFoundError:
+                print("File not found.")
+            except Exception as e:
+                print(f"An error occurred: {e}")
+        else:
+            print("Env variables OPENAI_API_KEY or OPENAI_API_URL not set")
 
     def ask_code_result(self):
-        path, lineno, pathspec = self.get_path(self.nujnus_task)
-        file_path, start_line, color = path, lineno, C.COLOR_DEBUG
+        if self.enable_ai:
+            path, lineno, pathspec = self.get_path(self.nujnus_task)
+            file_path, start_line, color = path, lineno, C.COLOR_DEBUG
 
-        try:
-            with open(file_path, "r") as file:
-                lines = file.readlines()
-                total_lines = len(lines)
-                msg, result_prompt = self.get_result_prompt()
-                if start_line <= total_lines:
-                    for i in range(start_line - 1, min(start_line + 9, total_lines)):
-                        line_number_info = f"{i+1}".rjust(5, " ") + "|"
-                        msg += line_number_info + lines[i]
-                    msg += (
-                        result_prompt + str(self.result_history[-1][1]._result)
-                        if len(self.result_history) > 0
-                        else None
-                    )
-                    print(colorize_code(self.chat(msg, self.chat_history)))
-                else:
-                    warning = (
-                        "Start line exceeds the total number of lines in the file."
-                    )
-                    self._display.display(msg=warning, color=C.COLOR_WARN)
+            try:
+                with open(file_path, "r") as file:
+                    lines = file.readlines()
+                    total_lines = len(lines)
+                    msg, result_prompt = self.get_result_prompt()
+                    if start_line <= total_lines:
+                        for i in range(
+                            start_line - 1, min(start_line + 9, total_lines)
+                        ):
+                            line_number_info = f"{i+1}".rjust(5, " ") + "|"
+                            msg += line_number_info + lines[i]
+                        msg += (
+                            result_prompt + str(self.result_history[-1][1]._result)
+                            if len(self.result_history) > 0
+                            else None
+                        )
+                        print(colorize_code(self.chat(msg, self.chat_history)))
+                    else:
+                        warning = (
+                            "Start line exceeds the total number of lines in the file."
+                        )
+                        self._display.display(msg=warning, color=C.COLOR_WARN)
 
-        except FileNotFoundError:
-            print("File not found.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
+            except FileNotFoundError:
+                print("File not found.")
+            except Exception as e:
+                print(f"An error occurred: {e}")
+        else:
+            print("Env variables OPENAI_API_KEY or OPENAI_API_URL not set")
 
     def display_code(self):
 
