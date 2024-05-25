@@ -123,9 +123,7 @@ class CallbackModule(CallbackBase):
 
     def get_comment_prompt(self):
         if self.aiansible_lang == "CN":
-            return (
-                "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):",
-            )
+            return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
         elif self.aiansible_lang == "EN":
             return "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code.  (Note: No additional explanation is needed except for this):"
         else:
