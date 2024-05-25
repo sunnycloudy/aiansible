@@ -41,6 +41,9 @@ export AIANSIBLE_LANG=EN
 ```
 ![Alt text](image-3.png)
 
+### 或在aiansible中用":cn"或":en"命令切换:
+![Alt text](image-4.png)
+
 
 ### 安装并开始使用 :
 - (1) **下载和安装:**

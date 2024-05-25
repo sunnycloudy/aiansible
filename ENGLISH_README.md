@@ -38,6 +38,9 @@ export AIANSIBLE_LANG=EN
 ```
 ![Alt text](image-3.png)
 
+### or use ":cn"and":en" to switch language:
+![Alt text](image-4.png)
+
 
 
 ### install and start using aiansible:
