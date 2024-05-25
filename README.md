@@ -83,6 +83,8 @@ export ANSIBLE_CONFIG=./debug.cfg
 ansible-playbook  xxx_playbook.yml
 ```
 
+---
+# demo:
 
 ## 以调试kubespray为例:
 ```

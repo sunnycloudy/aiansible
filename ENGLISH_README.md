@@ -83,7 +83,8 @@ export ANSIBLE_CONFIG=./debug.cfg
 ```
 ansible-playbook  xxx_playbook.yml
 ```
-
+---
+# demo:
 
 ## kubespray example:
 ```
