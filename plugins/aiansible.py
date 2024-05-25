@@ -268,7 +268,6 @@ class CallbackModule(CallbackBase):
         self.nujnus_task_path_list.append((pathspec, task_name))
 
     def get_ask_prompt(self):
-        print(self.aiansible_lang)
         if self.aiansible_lang == "CN":
             return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
         elif self.aiansible_lang == "EN":
