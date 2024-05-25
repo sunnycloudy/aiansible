@@ -267,13 +267,24 @@ class CallbackModule(CallbackBase):
 
         self.nujnus_task_path_list.append((pathspec, task_name))
 
-    def get_ask_prompt(self):
+    def get_comment_prompt(self):
         if self.aiansible_lang == "CN":
             return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
         elif self.aiansible_lang == "EN":
             return "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code.  (Note: No additional explanation is needed except for this):"
         else:
             return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
+
+    def get_ask_prompt(self):
+        if self.aiansible_lang == "CN":
+            return "请根据当前ansible任务:", "回答如下问题:"
+        elif self.aiansible_lang == "EN":
+            return (
+                "based on the current Ansible tasks:",
+                "Please answer the following question:",
+            )
+        else:
+            return "请根据当前ansible任务:", "回答如下问题:"
 
     def ask_code_comment(self):
 
@@ -284,7 +295,7 @@ class CallbackModule(CallbackBase):
             with open(file_path, "r") as file:
                 lines = file.readlines()
                 total_lines = len(lines)
-                msg = self.get_ask_prompt()
+                msg = self.get_comment_prompt()
                 if start_line <= total_lines:
                     for i in range(start_line - 1, min(start_line + 9, total_lines)):
                         line_number_info = f"{i+1}".rjust(5, " ") + "|"
@@ -308,7 +319,8 @@ class CallbackModule(CallbackBase):
         try:
             with open(file_path, "r") as file:
                 content = file.read()
-                msg = f"请根据当前ansible任务:\n{content}\n回答如下问题:{user_input}"
+                pre_prompt, post_prompt = self.get_ask_prompt()
+                msg = f"{pre_prompt}\n{content}\n{post_prompt}{user_input}"
                 print(colorize_code(self.chat(msg, self.chat_history)))
 
         except FileNotFoundError:
