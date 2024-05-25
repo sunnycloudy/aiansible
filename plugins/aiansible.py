@@ -121,6 +121,45 @@ class CallbackModule(CallbackBase):
         self.chat_history = []
         self.chat_history.append(self.chat_context)
 
+    def get_comment_prompt(self):
+        if self.aiansible_lang == "CN":
+            return (
+                "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):",
+            )
+        elif self.aiansible_lang == "EN":
+            return "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code.  (Note: No additional explanation is needed except for this):"
+        else:
+            return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
+
+    def get_ask_prompt(self):
+        if self.aiansible_lang == "CN":
+            return "请根据当前ansible任务:", "回答如下问题:"
+        elif self.aiansible_lang == "EN":
+            return (
+                "based on the current Ansible tasks:",
+                "Please answer the following question:",
+            )
+        else:
+            return "请根据当前ansible任务:", "回答如下问题:"
+
+    def get_result_prompt(self):
+        if self.aiansible_lang == "CN":
+            return (
+                "用中文, 在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进(注意:除此之外,不需要额外说明 ):",
+                "\n运行结果为:",
+            )
+        elif self.aiansible_lang == "EN":
+            return (
+                "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code, and then analyze the reasons for the results of the task , in the end tell me how to improve. (Note: No additional explanation is needed except for this):",
+                "\nresults of the task is:",
+            )
+        else:
+            return (
+                "用中文, 在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进(注意:除此之外,不需要额外说明 ):",
+                "\n运行结果为:",
+            )
+
+
     def chat(self, query, history):
         self.chat_history.append({"role": "user", "content": query})
         completion = self.ai_client.chat.completions.create(
@@ -267,43 +306,6 @@ class CallbackModule(CallbackBase):
 
         self.nujnus_task_path_list.append((pathspec, task_name))
 
-    def get_comment_prompt(self):
-        if self.aiansible_lang == "CN":
-            return (
-                "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):",
-            )
-        elif self.aiansible_lang == "EN":
-            return "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code.  (Note: No additional explanation is needed except for this):"
-        else:
-            return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
-
-    def get_ask_prompt(self):
-        if self.aiansible_lang == "CN":
-            return "请根据当前ansible任务:", "回答如下问题:"
-        elif self.aiansible_lang == "EN":
-            return (
-                "based on the current Ansible tasks:",
-                "Please answer the following question:",
-            )
-        else:
-            return "请根据当前ansible任务:", "回答如下问题:"
-
-    def get_result_prompt(self):
-        if self.aiansible_lang == "CN":
-            return (
-                "用中文, 在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进(注意:除此之外,不需要额外说明 ):",
-                "\n运行结果为:",
-            )
-        elif self.aiansible_lang == "EN":
-            return (
-                "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code, and then analyze the reasons for the results of the task , in the end tell me how to improve. (Note: No additional explanation is needed except for this):",
-                "\nresults of the task is:",
-            )
-        else:
-            return (
-                "用中文, 在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进(注意:除此之外,不需要额外说明 ):",
-                "\n运行结果为:",
-            )
 
     def ask_code_comment(self):
 
