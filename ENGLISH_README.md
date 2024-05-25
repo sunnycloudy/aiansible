@@ -12,8 +12,8 @@
 
 ## 基本使用说明/basic usage:
 ```
-LCN            Set the language to Chinese
-LEN            Set the language to English
+:cn            Set the language to Chinese
+:en            Set the language to English
 i              Annotate the code of the currently executing task
 ir             Annotate the code of the currently executing task, analyze the results, and provide suggestions for improvement
 ask            Please answer questions based on the current Ansible task

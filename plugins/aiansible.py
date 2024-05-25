@@ -30,8 +30,8 @@ BLUE = "\033[34m"
 YELLOW = "\033[93m"
 RESET = "\033[0m"
 HELP = """
-LCN            设置语言为中文
-LEN            设置语言为英文
+:cn            设置语言为中文
+:en            设置语言为英文
 i              对当前执行的任务代码进行注释
 ir             对当前执行的任务代码进行注释, 再分析一下运行结果, 再给出改进建议
 ask            请根据当前ansible任务:回答问题
@@ -50,8 +50,8 @@ exit           退出
 """
 
 ENGLISH_HELP = """
-LCN            Set the language to Chinese
-LEN            Set the language to English
+:cn            Set the language to Chinese
+:en            Set the language to English
 i              Annotate the code of the currently executing task
 ir             Annotate the code of the currently executing task, analyze the results, and provide suggestions for improvement
 ask            Please answer questions based on the current Ansible task
@@ -621,6 +621,10 @@ class CallbackModule(CallbackBase):
                             print("任务被用户中断!")
                             sys.exit(0)  # 或者使用更合适的方式来优雅地停止Ansible执行
 
+                    elif action.lower() == ":cn":
+                        self.aiansible_lang = "CN"
+                    elif action.lower() == ":en":
+                        self.aiansible_lang = "EN"
                     elif action.lower() == "next" or action.lower() == "n":
                         break  # 用户输入 exit 时退出循环
                     elif action.lower() == "m":  # moveon
