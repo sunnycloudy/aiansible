@@ -31,7 +31,7 @@ a    arg       View all arguments, or a single argument (assuming the task has n
 exit           Exit
 ```
 
-### check the result of an ansible task:
+### check the result of current ansible task:
 ```
 Aiansible(CN) => result._result
 {'msg': 'Check roles/kubespray-defaults/defaults/main.yml', '_ansible_verbose_always': True, '_ansible_no_log': False, 'changed': False}
