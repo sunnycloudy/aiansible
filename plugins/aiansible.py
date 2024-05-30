@@ -101,7 +101,8 @@ def colorize_code(code):
         colored_code = re.sub(
             special_string_pattern,
             lambda match: GREEN + match.group(0) + RESET,
-            colored_code, flags=re.IGNORECASE
+            colored_code,
+            flags=re.IGNORECASE,
         )
 
     return colored_code
@@ -120,6 +121,38 @@ def get_env_variable_or_default(env_name, default_value):
     # 使用 os.environ.get 方法获取环境变量的值
     # 如果环境变量不存在，返回 default_value
     return os.environ.get(env_name, default_value)
+
+
+def print_error(message):
+    # ANSI红色代码
+    RED = "\033[91m"
+    # ANSI重置代码，用于重置文本颜色
+    RESET = "\033[0m"
+    
+    # 打印错误消息，使用红色高亮
+    print(f"{RED}{message}{RESET}")
+
+def load_config():
+    # 构建配置文件的路径
+    config_path = os.path.join(
+        os.path.expanduser("~"), ".aiansible_plugin", "config.yml"
+    )
+
+    # 检查配置文件是否存在
+    if not os.path.exists(config_path):
+        print_error(f"error: Configuration file not found: {config_path}")
+        return {}
+    else:
+        # 读取并解析YAML配置文件
+        with open(config_path, "r") as file:
+            config = yaml.safe_load(file)
+
+        if not isinstance(config, dict):
+            print_error(f"error: config must be a dictionary: {config_path}")
+            return {}
+
+        # 返回配置
+        return config
 
 
 class CallbackModule(CallbackBase):
@@ -153,9 +186,15 @@ class CallbackModule(CallbackBase):
         # 记录要跳过的同名的任务
         self.move_on_at_task = None
 
-        api_key = os.environ.get("OPENAI_API_KEY")
-        base_url = os.environ.get("OPENAI_API_URL")
-        self.ai_model = os.environ.get("OPENAI_MODEL")
+        config = load_config()
+        openai_config = config.get("openai", {})
+        api_key = os.environ.get("OPENAI_API_KEY", default=openai_config.get("api_key"))
+        base_url = os.environ.get(
+            "OPENAI_API_URL", default=openai_config.get("api_url")
+        )
+        self.ai_model = os.environ.get(
+            "OPENAI_MODEL", default=openai_config.get("model")
+        )
         if api_key == None or base_url == None or self.ai_model == None:
             self.enable_ai = False
         else:
@@ -297,8 +336,8 @@ class CallbackModule(CallbackBase):
     def chat(self, query, history):
         self.chat_history.append({"role": "user", "content": query})
         completion = self.ai_client.chat.completions.create(
-            #model="moonshot-v1-8k",
-            model = self.ai_model,
+            # model="moonshot-v1-8k",
+            model=self.ai_model,
             messages=history,
             temperature=0.3,
         )
@@ -514,7 +553,9 @@ class CallbackModule(CallbackBase):
                     pass
 
             else:
-                print("Env variables OPENAI_API_KEY or OPENAI_API_URL or OPENAI_MODEL not set")
+                print(
+                    "Env variables OPENAI_API_KEY or OPENAI_API_URL or OPENAI_MODEL not set"
+                )
         except FileNotFoundError:
             print("File not found.")
         except Exception as e:
@@ -537,7 +578,9 @@ class CallbackModule(CallbackBase):
             except Exception as e:
                 print(f"An error occurred: {e}")
         else:
-            print("Env variables OPENAI_API_KEY or OPENAI_API_URL or OPENAI_MODEL not set")
+            print(
+                "Env variables OPENAI_API_KEY or OPENAI_API_URL or OPENAI_MODEL not set"
+            )
 
     # def ask_code_result(self):
     #    if self.enable_ai:
