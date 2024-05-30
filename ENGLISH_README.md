@@ -41,7 +41,7 @@ export AIANSIBLE_LANG=EN
 ### or use ":cn"and":en" to switch language:
 ![Alt text](image-4.png)
 
-### Recommended environment
+### Recommended environment:
 
 ```
 (base) root@8fb53c0330bb /home/nujnus/workspace/aiansible ±main # python --version
