@@ -72,14 +72,15 @@ callbacks_enabled = aiansible.py
 
 **使用配置文件(推荐)**
 
-创建配置文件位置: ~/.aiansible_plugin/config.yml
 如果不设置就没有ai提示功能,
+
+创建配置文件位置: ~/.aiansible_plugin/config.yml
 
 ```
 openai:
-  api_key: https://api.moonshot.cn/v1
-  api_url: your_openai_api_url_here
-  model: moonshot-v1-8k
+  api_key: https://api.moonshot.cn/v1 #或者其他兼容openai的api地址
+  api_url: your_openai_api_url_here #或者其他兼容openai的key
+  model: moonshot-v1-8k #或者其他兼容openai的model名
 ```
 
 **或者使用环境变量配置ai**
@@ -141,6 +142,7 @@ ignore_patterns = artifacts, credentials
 **使用配置文件(推荐)**
 
 如果不设置就没有ai提示功能,
+
 创建配置文件位置: ~/.aiansible_plugin/config.yml
 
 ```
