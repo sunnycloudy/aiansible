@@ -265,20 +265,33 @@ class CallbackModule(CallbackBase):
     def display_lines_from_file(self, file_path, start_line, color=None):
         try:
             with open(file_path, "r") as file:
-                lines = file.readlines()
-                total_lines = len(lines)
+                # 初始化行号计数器
+                line_number = 0
+    
+                # 逐行读取文件，直到达到起始行
+                for line in file:
+                    line_number += 1
+                    if line_number == start_line:
+                        break  # 达到起始行，跳出循环
 
-                if start_line <= total_lines:
-                    for i in range(start_line - 1, min(start_line + 9, total_lines)):
-                        line_number_info = f"{i+1}".rjust(5, " ") + "|"
-                        self._display.display(
-                            msg=line_number_info + lines[i], color=color
-                        )
-                else:
+                if line_number < start_line:
                     warning = (
                         "Start line exceeds the total number of lines in the file."
                     )
                     self._display.display(msg=warning, color=C.COLOR_WARN)
+                    return 1
+
+                # 从起始行开始，逐行读取直到遇到空行
+                for line in file:
+                    if line.strip() == "":
+                        break  # 遇到空行，停止读取
+    
+                    # 显示行号和行内容
+                    line_number += 1  # 更新行号计数器
+                    line_number_info = f"{line_number}".rjust(5, " ") + "|"
+                    self._display.display(
+                        msg=line_number_info + line, color=color
+                    )
 
         except FileNotFoundError:
             print("File not found.")
