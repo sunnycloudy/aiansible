@@ -315,40 +315,6 @@ class CallbackModule(CallbackBase):
             line_number_info = f"{line_number}".rjust(5, " ") + "|"
             self._display.display(msg=line_number_info + line, color=color)
 
-    # def display_lines_from_file(self, file_path, start_line, color=None):
-    #    try:
-    #        with open(file_path, "r") as file:
-    #            # 初始化行号计数器
-    #            line_number = 0
-
-    #            # 逐行读取文件，直到达到起始行
-    #            for line in file:
-    #                line_number += 1
-    #                if (line_number + 1) == start_line:
-    #                    break  # 达到起始行，跳出循环
-
-    #            if (line_number + 1) < start_line:
-    #                warning = (
-    #                    "Start line exceeds the total number of lines in the file."
-    #                )
-    #                self._display.display(msg=warning, color=C.COLOR_WARN)
-    #                return 1
-
-    #            # 从起始行开始，逐行读取直到遇到空行
-    #            for line in file:
-    #                if line.strip() == "":
-    #                    break  # 遇到空行，停止读取
-
-    #                # 显示行号和行内容
-    #                line_number += 1  # 更新行号计数器
-    #                line_number_info = f"{line_number}".rjust(5, " ") + "|"
-    #                self._display.display(msg=line_number_info + line, color=color)
-
-    #    except FileNotFoundError:
-    #        print("File not found.")
-    #    except Exception as e:
-    #        print(f"An error occurred: {e}")
-
     # 调用函数并传递文件路径和起始行数
     def get_path(self, task):
         pathspec = task.get_path()
