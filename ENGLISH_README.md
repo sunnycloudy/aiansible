@@ -84,9 +84,9 @@ callbacks_enabled = aiansible.py
 
 - (4) **Configure AI parameters:**
 
-**Use a configuration file (recommended)**
+If not set, the AI prompt feature will not be available, but it will not affect normal debugging.
 
-If not set, there will be no AI prompt feature,
+**Use a configuration file (recommended)**
 
 create config.yml: ~/.aiansible_plugin/config.yml
 

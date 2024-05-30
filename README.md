@@ -85,9 +85,9 @@ callbacks_enabled = aiansible.py
 
 - (4) **配置ai参数:**
 
-**使用配置文件(推荐)**
+如果不设置就没有ai提示功能, 但不影响正常调试.
 
-如果不设置就没有ai提示功能,
+**使用配置文件(推荐)**
 
 创建配置文件位置: ~/.aiansible_plugin/config.yml
 
