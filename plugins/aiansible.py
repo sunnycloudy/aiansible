@@ -195,6 +195,12 @@ class CallbackModule(CallbackBase):
         self.ai_model = os.environ.get(
             "OPENAI_MODEL", default=openai_config.get("model")
         )
+        if api_key == None:
+            print_error("error: ai api_key is None")
+        if base_url == None:
+            print_error("error: ai base_url is None")
+        if self.ai_model == None:
+            print_error("error: ai model is None")
         if api_key == None or base_url == None or self.ai_model == None:
             self.enable_ai = False
         else:
