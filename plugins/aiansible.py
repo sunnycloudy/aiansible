@@ -128,9 +128,10 @@ def print_error(message):
     RED = "\033[91m"
     # ANSI重置代码，用于重置文本颜色
     RESET = "\033[0m"
-    
+
     # 打印错误消息，使用红色高亮
     print(f"{RED}{message}{RESET}")
+
 
 def load_config():
     # 构建配置文件的路径
@@ -342,7 +343,6 @@ class CallbackModule(CallbackBase):
     def chat(self, query, history):
         self.chat_history.append({"role": "user", "content": query})
         completion = self.ai_client.chat.completions.create(
-            # model="moonshot-v1-8k",
             model=self.ai_model,
             messages=history,
             temperature=0.3,
