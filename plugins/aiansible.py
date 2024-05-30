@@ -23,6 +23,9 @@ import yaml
 from openai import OpenAI
 import re
 
+ASK_AI_TO_COMMENT = 0
+ASK_AI_TO_ANALYZE = 1
+ASK_AI_TO_CHAT = 2
 
 GREEN = "\033[92m"
 RED = "\033[91m"
@@ -371,7 +374,7 @@ class CallbackModule(CallbackBase):
 
         print(colorize_code(self.chat(msg, self.chat_history)))
 
-    def ask_ai(self):
+    def ask_ai(self, for_what):
         try:
             if self.enable_ai:
 
@@ -382,8 +385,13 @@ class CallbackModule(CallbackBase):
                 if len(lines) == 0:
                     warning = "Start line exceeds the total number of lines in the file or task not exist."
                     self._display.display(msg=warning, color=C.COLOR_WARN)
+                if for_what == ASK_AI_TO_COMMENT:
+                    self.comment_code(lines_with_number=lines)
+                elif for_what == ASK_AI_TO_ANALYZE:
+                    pass
+                else:
+                    pass
 
-                self.comment_code(lines_with_number=lines)
 
             else:
                 print("Env variables OPENAI_API_KEY or OPENAI_API_URL not set")
@@ -692,7 +700,7 @@ class CallbackModule(CallbackBase):
 
                     elif action.lower() == "i":
                         # self.display_code()
-                        self.ask_ai()  # 查看注释
+                        self.ask_ai(for_what=ASK_AI_TO_COMMENT)  # 查看注释
                     elif action.lower() == "ir":
                         self.ask_code_result()  # 请求分析结果
                     elif action.lower() == "ask":
