@@ -46,6 +46,22 @@ export AIANSIBLE_LANG=EN
 ### 或在aiansible中用":cn"或":en"命令切换:
 ![Alt text](image-4.png)
 
+### 推荐环境:
+```
+(base) root@8fb53c0330bb /home/nujnus/workspace/aiansible ±main # python --version
+Python 3.9.18
+(base) root@8fb53c0330bb /home/nujnus/workspace/aiansible ±main⚡ # ansible --version
+ansible [core 2.12.10]
+  config file = None
+  configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /opt/conda/lib/python3.9/site-packages/ansible
+  ansible collection location = /root/.ansible/collections:/usr/share/ansible/collections
+  executable location = /opt/conda/bin/ansible
+  python version = 3.9.18 (main, Sep 11 2023, 13:41:44) [GCC 11.2.0]
+  jinja version = 3.1.2
+  libyaml = True
+
+```
 
 ### 安装并开始使用 :
 - (1) **下载和安装:**
