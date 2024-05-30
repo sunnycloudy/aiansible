@@ -63,19 +63,33 @@ pip install  -r requirements.txt
 callback_plugins = ~/.aiansible_plugin
 callbacks_enabled = aiansible.py
 ```
-- (4) **set environments:**
-```
-# If it's not necessary to use AI, you can choose not to set following variable:
-export OPENAI_API_URL=https://api.moonshot.cn/v1  #Or other API addresses compatible with OpenAI.
-export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #Or other keys compatible with OpenAI.
 
-# Configure the plugin in the debug.cfg file.
+- (4) **Configure AI parameters:**
+
+If not set, there will be no AI prompt feature,
+
+**Use a configuration file (recommended)**
+```
+openai:
+  api_key: https://api.moonshot.cn/v1 
+  api_url: your_openai_api_url_here
+  model: moonshot-v1-8k
+```
+
+**Or use environment variables to configure AI**
+```
+export OPENAI_API_URL=https://api.moonshot.cn/v1   #or any other compatible OpenAI API address
+export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #or any other compatible OpenAI key
+export OPENAI_MODEL=moonshot-v1-8k #or any other compatible OpenAI model name
+```
+
+- (5) **Run:**
+```
+# Configure the plugin in debug.cfg
 export ANSIBLE_CONFIG=./debug.cfg
+ansible-playbook xxx_playbook.yml
 ```
-- (5) **run command:**
-```
-ansible-playbook  xxx_playbook.yml
-```
+
 ---
 # demo:
 

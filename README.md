@@ -69,6 +69,7 @@ callbacks_enabled = aiansible.py
 ```
 
 - (4) **配置ai参数:**
+
 **使用配置文件(推荐)**
 
 如果不设置就没有ai提示功能,
@@ -82,7 +83,6 @@ openai:
 
 **或者使用环境变量配置ai**
 ```
-# 如果不设置就没有ai提示功能, 但依然能调试.
 export OPENAI_API_URL=https://api.moonshot.cn/v1  #或者其他兼容openai的api地址
 export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #或者其他兼容openai的key
 export OPENAI_MODEL=moonshot-v1-8k #或者其他兼容openai的model名
