@@ -267,14 +267,14 @@ class CallbackModule(CallbackBase):
             with open(file_path, "r") as file:
                 # 初始化行号计数器
                 line_number = 0
-    
+
                 # 逐行读取文件，直到达到起始行
                 for line in file:
                     line_number += 1
-                    if line_number == start_line:
+                    if (line_number + 1) == start_line:
                         break  # 达到起始行，跳出循环
 
-                if line_number < start_line:
+                if (line_number + 1)< start_line:
                     warning = (
                         "Start line exceeds the total number of lines in the file."
                     )
@@ -285,13 +285,11 @@ class CallbackModule(CallbackBase):
                 for line in file:
                     if line.strip() == "":
                         break  # 遇到空行，停止读取
-    
+
                     # 显示行号和行内容
                     line_number += 1  # 更新行号计数器
                     line_number_info = f"{line_number}".rjust(5, " ") + "|"
-                    self._display.display(
-                        msg=line_number_info + line, color=color
-                    )
+                    self._display.display(msg=line_number_info + line, color=color)
 
         except FileNotFoundError:
             print("File not found.")
