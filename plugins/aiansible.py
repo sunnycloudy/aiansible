@@ -262,39 +262,92 @@ class CallbackModule(CallbackBase):
             with open(self.break_list_file_path, "w") as file:
                 yaml.dump(self.break_list, file)
 
-    def display_lines_from_file(self, file_path, start_line, color=None):
+    # 读取文件内容的函数
+    def read_code_from_file(self, file_path, start_line):
+        lines = []
+        line_number = 0
+        start_line -= 1
+
         try:
             with open(file_path, "r") as file:
-                # 初始化行号计数器
-                line_number = 0
-
-                # 逐行读取文件，直到达到起始行
                 for line in file:
+                    if line_number >= start_line:
+                        if line.strip() == "":
+                            break  # 遇到空行，停止收集
+                        # 达到启始行, 开始收集
+                        lines.append((line_number, line))
                     line_number += 1
-                    if (line_number + 1) == start_line:
-                        break  # 达到起始行，跳出循环
-
-                if (line_number + 1)< start_line:
-                    warning = (
-                        "Start line exceeds the total number of lines in the file."
-                    )
-                    self._display.display(msg=warning, color=C.COLOR_WARN)
-                    return 1
-
-                # 从起始行开始，逐行读取直到遇到空行
-                for line in file:
-                    if line.strip() == "":
-                        break  # 遇到空行，停止读取
-
-                    # 显示行号和行内容
-                    line_number += 1  # 更新行号计数器
-                    line_number_info = f"{line_number}".rjust(5, " ") + "|"
-                    self._display.display(msg=line_number_info + line, color=color)
+                    continue  # 跳过起始行之前的行
 
         except FileNotFoundError:
             print("File not found.")
+            return None
         except Exception as e:
             print(f"An error occurred: {e}")
+            return None
+
+        return lines
+
+    # 打印行的函数
+    def print_lines(self, lines, color=None):
+        if lines is None:
+            return
+
+        for line in lines:
+            # 这里可以添加行号信息，如果需要的话
+            self.display_line(line, color)
+
+    # 显示单行的函数
+    def display_line(self, line, color=None):
+        # 这里可以是任何显示逻辑，例如打印到控制台或显示在GUI界面
+        print(line, end="")
+
+    # 打印代码的函数，它调用read_code_from_file并使用print_lines打印结果
+    # print_code
+    def display_lines_from_file(self, file_path, start_line, color=None):
+        lines = self.read_code_from_file(file_path, start_line)
+        for line_number, line in lines:
+            if line.strip() == "":
+                break  # 遇到空行，停止读取
+
+            # 显示行号和行内容
+            line_number += 1  # 更新行号计数器
+            line_number_info = f"{line_number}".rjust(5, " ") + "|"
+            self._display.display(msg=line_number_info + line, color=color)
+
+    # def display_lines_from_file(self, file_path, start_line, color=None):
+    #    try:
+    #        with open(file_path, "r") as file:
+    #            # 初始化行号计数器
+    #            line_number = 0
+
+    #            # 逐行读取文件，直到达到起始行
+    #            for line in file:
+    #                line_number += 1
+    #                if (line_number + 1) == start_line:
+    #                    break  # 达到起始行，跳出循环
+
+    #            if (line_number + 1) < start_line:
+    #                warning = (
+    #                    "Start line exceeds the total number of lines in the file."
+    #                )
+    #                self._display.display(msg=warning, color=C.COLOR_WARN)
+    #                return 1
+
+    #            # 从起始行开始，逐行读取直到遇到空行
+    #            for line in file:
+    #                if line.strip() == "":
+    #                    break  # 遇到空行，停止读取
+
+    #                # 显示行号和行内容
+    #                line_number += 1  # 更新行号计数器
+    #                line_number_info = f"{line_number}".rjust(5, " ") + "|"
+    #                self._display.display(msg=line_number_info + line, color=color)
+
+    #    except FileNotFoundError:
+    #        print("File not found.")
+    #    except Exception as e:
+    #        print(f"An error occurred: {e}")
 
     # 调用函数并传递文件路径和起始行数
     def get_path(self, task):
