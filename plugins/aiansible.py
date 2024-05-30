@@ -370,22 +370,19 @@ class CallbackModule(CallbackBase):
             file_path, start_line, color = path, lineno, C.COLOR_DEBUG
 
             try:
-                with open(file_path, "r") as file:
-                    lines = file.readlines()
-                    total_lines = len(lines)
-                    msg = self.get_comment_prompt()
-                    if start_line <= total_lines:
-                        for i in range(
-                            start_line - 1, min(start_line + 9, total_lines)
-                        ):
-                            line_number_info = f"{i+1}".rjust(5, " ") + "|"
-                            msg += line_number_info + lines[i]
-                        print(colorize_code(self.chat(msg, self.chat_history)))
-                    else:
-                        warning = (
-                            "Start line exceeds the total number of lines in the file."
-                        )
-                        self._display.display(msg=warning, color=C.COLOR_WARN)
+                lines = self.read_code_from_file(file_path, start_line)
+                msg = self.get_comment_prompt()
+                if len(lines) == 0:
+                    warning = (
+                        "Start line exceeds the total number of lines in the file or task not exist."
+                    )
+                    self._display.display(msg=warning, color=C.COLOR_WARN)
+
+                for line_number, line in lines:
+                    line_number_info = f"{line_number+1}".rjust(5, " ") + "|"
+                    msg += line_number_info + line
+
+                print(colorize_code(self.chat(msg, self.chat_history)))
 
             except FileNotFoundError:
                 print("File not found.")
