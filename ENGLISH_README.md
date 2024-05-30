@@ -67,6 +67,7 @@ callbacks_enabled = aiansible.py
 - (4) **Configure AI parameters:**
 
 If not set, there will be no AI prompt feature,
+create config.yml: ~/.aiansible_plugin/config.yml
 
 **Use a configuration file (recommended)**
 ```
@@ -134,6 +135,7 @@ ignore_patterns = artifacts, credentials
 **Configure AI parameters:**
 
 If not set, there will be no AI prompt feature,
+create config.yml: ~/.aiansible_plugin/config.yml
 
 **Use a configuration file (recommended)**
 ```
