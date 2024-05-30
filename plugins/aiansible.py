@@ -206,10 +206,7 @@ class CallbackModule(CallbackBase):
             self.enable_ai = False
         else:
             self.enable_ai = True
-            print(api_key, base_url)
-            print("000000000000000000000000000000000000")
             self.ai_client = OpenAI(api_key=api_key, base_url=base_url)
-            print("000000000000000000000000000000000000")
             self.chat_context = {
                 "role": "system",
                 "content": "你是 commentator，你更擅长中文和英文的对话。你会为用户提供安全，有帮助，准确的回答。",  # 你会根据用户给出的代码, 在用户给出的代码之后写出用中文进行的注释, 你会将用户给出的代码 和你的注释合并在一起.
