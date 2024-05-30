@@ -1,8 +1,6 @@
 # aiansible:
 [切换到中文](./README.md)
 
-  调试ansible, 并通过chatgpt or kimi注释和提示错误的解决办法.
-
   Debug Ansible, and use chatgpt or kimi AI annotations and hints to resolve errors.
   
 ## 基本使用说明/basic usage:
