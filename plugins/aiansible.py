@@ -363,33 +363,34 @@ class CallbackModule(CallbackBase):
 
         self.nujnus_task_path_list.append((pathspec, task_name))
 
-    def ask_code_comment(self):
-        if self.enable_ai:
+    def comment_code(self, lines_with_number):
+        msg = self.get_comment_prompt()
+        for line_number, line in lines_with_number:
+            line_number_info = f"{line_number+1}".rjust(5, " ") + "|"
+            msg += line_number_info + line
 
-            path, lineno, pathspec = self.get_path(self.nujnus_task)
-            file_path, start_line, color = path, lineno, C.COLOR_DEBUG
+        print(colorize_code(self.chat(msg, self.chat_history)))
 
-            try:
+    def ask_ai(self):
+        try:
+            if self.enable_ai:
+
+                path, lineno, pathspec = self.get_path(self.nujnus_task)
+                file_path, start_line, color = path, lineno, C.COLOR_DEBUG
+
                 lines = self.read_code_from_file(file_path, start_line)
-                msg = self.get_comment_prompt()
                 if len(lines) == 0:
-                    warning = (
-                        "Start line exceeds the total number of lines in the file or task not exist."
-                    )
+                    warning = "Start line exceeds the total number of lines in the file or task not exist."
                     self._display.display(msg=warning, color=C.COLOR_WARN)
 
-                for line_number, line in lines:
-                    line_number_info = f"{line_number+1}".rjust(5, " ") + "|"
-                    msg += line_number_info + line
+                self.comment_code(lines_with_number=lines)
 
-                print(colorize_code(self.chat(msg, self.chat_history)))
-
-            except FileNotFoundError:
-                print("File not found.")
-            except Exception as e:
-                print(f"An error occurred: {e}")
-        else:
-            print("Env variables OPENAI_API_KEY or OPENAI_API_URL not set")
+            else:
+                print("Env variables OPENAI_API_KEY or OPENAI_API_URL not set")
+        except FileNotFoundError:
+            print("File not found.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
     def ask(self, user_input):
         if self.enable_ai:
@@ -691,7 +692,7 @@ class CallbackModule(CallbackBase):
 
                     elif action.lower() == "i":
                         # self.display_code()
-                        self.ask_code_comment()  # 查看注释
+                        self.ask_ai()  # 查看注释
                     elif action.lower() == "ir":
                         self.ask_code_result()  # 请求分析结果
                     elif action.lower() == "ask":
