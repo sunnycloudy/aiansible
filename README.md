@@ -67,17 +67,32 @@ pip install  -r requirements.txt
 callback_plugins = ~/.aiansible_plugin
 callbacks_enabled = aiansible.py
 ```
-- (4) **设置环境变量:**
+
+- (4) **配置ai参数:**
+**使用配置文件(推荐)**
+
+如果不设置就没有ai提示功能,
+
 ```
-# 可选的两个变量, 如果不设置就没有ai提示功能, 但依然能调试.
+openai:
+  api_key: https://api.moonshot.cn/v1
+  api_url: your_openai_api_url_here
+  model: moonshot-v1-8k
+```
+
+**或者使用环境变量配置ai**
+```
+# 如果不设置就没有ai提示功能, 但依然能调试.
 export OPENAI_API_URL=https://api.moonshot.cn/v1  #或者其他兼容openai的api地址
 export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #或者其他兼容openai的key
+export OPENAI_MODEL=moonshot-v1-8k #或者其他兼容openai的model名
+```
 
+
+- (5) **运行:**
+```
 # 在debug.cfg中配置好插件
 export ANSIBLE_CONFIG=./debug.cfg
-```
-- (5) **运行命令/run command:**
-```
 ansible-playbook  xxx_playbook.yml
 ```
 
@@ -121,11 +136,28 @@ ignore_patterns = artifacts, credentials
 ```
 
 ### 运行命令/run command:
+
+**使用配置文件(推荐)**
+
+如果不设置就没有ai提示功能,
+
+```
+openai:
+  api_key: https://api.moonshot.cn/v1
+  api_url: your_openai_api_url_here
+  model: moonshot-v1-8k
+```
+
+**或者使用环境变量配置ai**
 ```
 # 如果不设置就没有ai提示功能, 但依然能调试.
 export OPENAI_API_URL=https://api.moonshot.cn/v1  #或者其他兼容openai的api地址
 export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #或者其他兼容openai的key
+export OPENAI_MODEL=moonshot-v1-8k #或者其他兼容openai的model名
+```
 
+**运行**
+```
 # 开始调试:
 export ANSIBLE_CONFIG=./ansible.cfg
 ansible-playbook  --become  -i  inventory/mycluster/inventory.ini  cluster.yml
