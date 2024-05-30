@@ -87,6 +87,23 @@ def colorize_code(code):
     #    r"(.*\n)", lambda match: GREEN + match.group(0) + RESET, colored_code
     # )
 
+    # 如果提供了特殊字符串和颜色代码，则替换该字符串为指定颜色
+    special_string_list = [
+        "[代码和注释:]",
+        "[运行结果分析:]",
+        "[改进建议：]",
+        "[ code and comment: ]",
+        "[ Analysis of the results: ]",
+        "[ Improvements: ]",
+    ]
+    for special_string in special_string_list:
+        special_string_pattern = re.escape(special_string)  # 转义特殊字符
+        colored_code = re.sub(
+            special_string_pattern,
+            lambda match: YELLOW + match.group(0) + RESET,
+            colored_code,
+        )
+
     return colored_code
 
 
