@@ -1,4 +1,4 @@
-# aiansible:
+# AIAnsible:
 [Link to ENGLISH README](./ENGLISH_README.md)
 
 

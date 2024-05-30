@@ -1,4 +1,4 @@
-# aiansible:
+# AIAnsible:
 [切换到中文](./README.md)
 
   Debug Ansible, and use chatgpt or kimi AI annotations and hints to resolve errors.
