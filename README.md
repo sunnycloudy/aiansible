@@ -34,12 +34,15 @@ Aiansible(CN) => result._result
 
 ## ai提示效果/example:
 默认是中文版,中文版效果: 
-![Alt text](image-2.png)
+
+![Alt text](image-5.png)
+
 如果要设置成英文版:
 ```
 export AIANSIBLE_LANG=EN
 ```
-![Alt text](image-3.png)
+
+![Alt text](image-6.png)
 
 ### 或在aiansible中用":cn"或":en"命令切换:
 ![Alt text](image-4.png)
