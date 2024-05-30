@@ -537,7 +537,7 @@ class CallbackModule(CallbackBase):
             except Exception as e:
                 print(f"An error occurred: {e}")
         else:
-            print("Env variables OPENAI_API_KEY or OPENAI_API_URL not set")
+            print("Env variables OPENAI_API_KEY or OPENAI_API_URL or OPENAI_MODEL not set")
 
     # def ask_code_result(self):
     #    if self.enable_ai:
