@@ -1,7 +1,7 @@
 # AIAnsible:
 [切换到中文](./README.md)
 
-  Debug Ansible, and use chatgpt or kimi AI annotations and hints to resolve errors.
+  Debugging Ansible with AI for automatic commenting, error analysis, and providing suggestions for improvement.
   
 ## 基本使用说明/basic usage:
 ```
