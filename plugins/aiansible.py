@@ -155,7 +155,8 @@ class CallbackModule(CallbackBase):
 
         api_key = os.environ.get("OPENAI_API_KEY")
         base_url = os.environ.get("OPENAI_API_URL")
-        if api_key == None or base_url == None:
+        self.ai_model = os.environ.get("OPENAI_MODEL")
+        if api_key == None or base_url == None or self.ai_model == None:
             self.enable_ai = False
         else:
             self.enable_ai = True
@@ -296,7 +297,8 @@ class CallbackModule(CallbackBase):
     def chat(self, query, history):
         self.chat_history.append({"role": "user", "content": query})
         completion = self.ai_client.chat.completions.create(
-            model="moonshot-v1-8k",
+            #model="moonshot-v1-8k",
+            model = self.ai_model,
             messages=history,
             temperature=0.3,
         )
@@ -512,7 +514,7 @@ class CallbackModule(CallbackBase):
                     pass
 
             else:
-                print("Env variables OPENAI_API_KEY or OPENAI_API_URL not set")
+                print("Env variables OPENAI_API_KEY or OPENAI_API_URL or OPENAI_MODEL not set")
         except FileNotFoundError:
             print("File not found.")
         except Exception as e:
