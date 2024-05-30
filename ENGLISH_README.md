@@ -2,6 +2,9 @@
 [切换到中文](./README.md)
 
   Debugging Ansible with AI for automatic commenting, error analysis, and providing suggestions for improvement.
+
+## QA:
+qq group: 937374915
   
 ## 基本使用说明/basic usage:
 ```

@@ -5,6 +5,9 @@
 
   Debugging Ansible with AI for automatic commenting, error analysis, and providing suggestions for improvement.
 
+## 技术问答:
+qq群: 937374915
+
 ## 基本使用说明/basic usage:
 ```
 :cn            设置语言为中文
