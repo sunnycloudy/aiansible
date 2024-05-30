@@ -155,6 +155,7 @@ class CallbackModule(CallbackBase):
             self.chat_history.append(self.chat_context)
 
     def get_comment_prompt(self):
+
         if self.aiansible_lang == "CN":
             return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
         elif self.aiansible_lang == "EN":
@@ -163,31 +164,105 @@ class CallbackModule(CallbackBase):
             return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
 
     def get_ask_prompt(self):
+        type_prompt = """\n请返回类似如下格式的回复:
+[代码和注释:]
+11|    - name: "Check {{ minimal_ansible_version }} <= Ansible version < {{ maximal_ansible_version }}"  # 任务名称，用于检查Ansible的版本是否在指定的范围内
+12|      assert:  # 断言模块，用于验证条件是否为真
+13|        msg: "Ansible must be between {{ minimal_ansible_version }} and {{ maximal_ansible_version }} exclusive"  # 如果断言失败，将显示此消息
+14|        that:  # 指定断言的条件
+15|          - ansible_version.string is version(minimal_ansible_version, ">=")  # 条件1：Ansible版本至少为minimal_ansible_version
+16|          - ansible_version.string is version(maximal_ansible_version, "<")  # 条件2：Ansible版本小于maximal_ansible_version
+17|      tags:  # 标签，用于选择执行哪些任务
+18|        - check  # 给该任务添加的标签为check
+"""
+
+        en_type_prompt = """\n请返回类似如下格式的回复:
+[ code and comment: ]
+11|    - name: "Check {{ minimal_ansible_version }} <= Ansible version < {{ maximal_ansible_version }}" # This task is named to check if the Ansible version is between the specified minimum and maximum exclusive versions.
+12|      assert: # The assert module is used here to ensure that certain conditions are met.
+13|        msg: "Ansible must be between {{ minimal_ansible_version }} and {{ maximal_ansible_version }} exclusive" # The message that will be displayed if the assertions fail, indicating the required version range.
+14|        that: # The conditions that must be true for the assertions to pass.
+15|          - ansible_version.string is version(minimal_ansible_version, ">=") # The first condition checks if the Ansible version is greater than or equal to the minimal version.
+16|          - ansible_version.string is version(maximal_ansible_version, "<") # The second condition checks if the Ansible version is less than the maximal version.
+17|      tags: # Tags are used to categorize tasks, which can be useful for selective execution.
+18|        - check # The task is tagged with 'check', which can be used to run only this task or a group of tasks with this tag.
+"""
+
         if self.aiansible_lang == "CN":
             return "请根据当前ansible任务:", "回答如下问题:"
         elif self.aiansible_lang == "EN":
-            return (
-                "based on the current Ansible tasks:",
-                "Please answer the following question:",
-            )
+            return "请根据当前ansible任务:", "用英语回答如下问题:"
         else:
             return "请根据当前ansible任务:", "回答如下问题:"
 
     def get_result_prompt(self):
+        type_prompt = """\n请返回类似如下格式的回复:
+[代码和注释:]
+11|    - name: "Check {{ minimal_ansible_version }} <= Ansible version < {{ maximal_ansible_version }}"  # 任务名称，用于检查Ansible的版本是否在指定的范围内
+12|      assert:  # 断言模块，用于验证条件是否为真
+13|        msg: "Ansible must be between {{ minimal_ansible_version }} and {{ maximal_ansible_version }} exclusive"  # 如果断言失败，将显示此消息
+14|        that:  # 指定断言的条件
+15|          - ansible_version.string is version(minimal_ansible_version, ">=")  # 条件1：Ansible版本至少为minimal_ansible_version
+16|          - ansible_version.string is version(maximal_ansible_version, "<")  # 条件2：Ansible版本小于maximal_ansible_version
+17|      tags:  # 标签，用于选择执行哪些任务
+18|        - check  # 给该任务添加的标签为check
+
+[运行结果分析:] 
+- {'_ansible_verbose_always': True, 'changed': False, 'msg': 'All assertions passed', '_ansible_no_log': False}
+  - _ansible_verbose_always: True 表示该任务的输出总是以详细模式显示
+  - changed: False 表示任务没有改变任何状态或数据
+  - msg: 'All assertions passed' 表示所有的断言都通过了，即Ansible版本符合条件
+  - _ansible_no_log: False 表示该任务的输出可以被记录
+
+[改进建议：]
+- 如果需要在Ansible版本不符合条件时中断执行，可以添加 `fail: yes` 来在断言失败时终止任务。
+- 如果需要更详细的错误信息，可以在 `msg` 字段中提供更具体的错误提示。
+- 如果`minimal_ansible_version`和`maximal_ansible_version`是动态的，确保它们在运行此任务之前被正确定义和传递。
+- 考虑使用 `when` 条件来避免在不需要时执行此任务，例如只在某些特定情况下检查版本。
+"""
+
+        en_type_prompt = """\n请返回类似如下格式的回复:
+[ code and comment: ]
+11|    - name: "Check {{ minimal_ansible_version }} <= Ansible version < {{ maximal_ansible_version }}" # This task is named to check if the Ansible version is between the specified minimum and maximum exclusive versions.
+12|      assert: # The assert module is used here to ensure that certain conditions are met.
+13|        msg: "Ansible must be between {{ minimal_ansible_version }} and {{ maximal_ansible_version }} exclusive" # The message that will be displayed if the assertions fail, indicating the required version range.
+14|        that: # The conditions that must be true for the assertions to pass.
+15|          - ansible_version.string is version(minimal_ansible_version, ">=") # The first condition checks if the Ansible version is greater than or equal to the minimal version.
+16|          - ansible_version.string is version(maximal_ansible_version, "<") # The second condition checks if the Ansible version is less than the maximal version.
+17|      tags: # Tags are used to categorize tasks, which can be useful for selective execution.
+18|        - check # The task is tagged with 'check', which can be used to run only this task or a group of tasks with this tag.
+
+[ Analysis of the results: ]
+- The task's result indicates that all assertions passed, which means the Ansible version is within the specified range.
+- The 'changed' flag is False, which indicates that no changes were made to the system as a result of this task.
+- The 'msg' field confirms that all assertions were successful.
+- The '_ansible_verbose_always' is True, which means the task's output is displayed in verbose mode.
+- The '_ansible_no_log' is False, which means the task's output is logged.
+
+[ Improvements: ]
+- If the task should fail and halt the playbook execution when the Ansible version is not within the specified range, you can add a `fail` statement to the assert module.
+- To provide more context in the event of a failure, consider enhancing the `msg` with more detailed information.
+- Ensure that the variables `minimal_ansible_version` and `maximal_ansible_version` are properly defined and passed into the playbook before this task is executed.
+- Use the `when` condition to skip this task when it's not necessary, for example, if the version check is only required under certain conditions.
+"""
+
         if self.aiansible_lang == "CN":
             return (
                 "用中文, 在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进(注意:除此之外,不需要额外说明 ):",
                 "\n运行结果为:",
+                type_prompt,
             )
         elif self.aiansible_lang == "EN":
             return (
-                "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code, and then analyze the reasons for the results of the task , in the end tell me how to improve. (Note: No additional explanation is needed except for this):",
-                "\nresults of the task is:",
+                "用英文, 在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进(注意:除此之外,不需要额外说明 ):",
+                "\n运行结果为:",
+                en_type_prompt,
             )
         else:
             return (
                 "用中文, 在每行代码后的同一行内, 注释一下如下代码, 再分析一下运行结果的原因, 再告诉我该如何改进(注意:除此之外,不需要额外说明 ):",
                 "\n运行结果为:",
+                type_prompt,
             )
 
     def chat(self, query, history):
@@ -378,12 +453,12 @@ class CallbackModule(CallbackBase):
     def analyze_code(self, lines_with_number):
         print("asking ai...")
         msg = self.get_comment_prompt()
-        msg, result_prompt = self.get_result_prompt()
+        msg, result_prompt, type = self.get_result_prompt()
         for line_number, line in lines_with_number:
             line_number_info = f"{line_number+1}".rjust(5, " ") + "|"
             msg += line_number_info + line
         msg += (
-            result_prompt + str(self.result_history[-1][1]._result)
+            result_prompt + str(self.result_history[-1][1]._result) + "\n" + type
             if len(self.result_history) > 0
             else None
         )
