@@ -367,6 +367,7 @@ class CallbackModule(CallbackBase):
         self.nujnus_task_path_list.append((pathspec, task_name))
 
     def comment_code(self, lines_with_number):
+        print("asking ai...")
         msg = self.get_comment_prompt()
         for line_number, line in lines_with_number:
             line_number_info = f"{line_number+1}".rjust(5, " ") + "|"
@@ -375,6 +376,7 @@ class CallbackModule(CallbackBase):
         print(colorize_code(self.chat(msg, self.chat_history)))
 
     def analyze_code(self, lines_with_number):
+        print("asking ai...")
         msg = self.get_comment_prompt()
         msg, result_prompt = self.get_result_prompt()
         for line_number, line in lines_with_number:
@@ -711,10 +713,9 @@ class CallbackModule(CallbackBase):
                         self.save_to_output_list(pathspec)
 
                     elif action.lower() == "i":
-                        # self.display_code()
                         self.ask_ai(for_what=ASK_AI_TO_COMMENT)  # 查看注释
                     elif action.lower() == "ir":
-                        self.ask_code_result()  # 请求分析结果
+                        self.ask_ai(for_what=ASK_AI_TO_ANALYZE)  # 查看注释
                     elif action.lower() == "ask":
                         self.ask(user_input)  # 请求分析结果
                     elif action.lower() == "p":  # print break_point list
