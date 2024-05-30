@@ -84,11 +84,12 @@ callbacks_enabled = aiansible.py
 
 - (4) **Configure AI parameters:**
 
+**Use a configuration file (recommended)**
+
 If not set, there will be no AI prompt feature,
 
 create config.yml: ~/.aiansible_plugin/config.yml
 
-**Use a configuration file (recommended)**
 ```
 openai:
   api_key: https://api.moonshot.cn/v1   #or any other compatible OpenAI API address
