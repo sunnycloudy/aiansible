@@ -131,16 +131,26 @@ ignore_patterns = artifacts, credentials
 
 ### run command:
 
-```
-# If it's not necessary to use AI, you can choose not to set following variable:
-export OPENAI_API_URL=https://api.moonshot.cn/v1  #Or other API addresses compatible with OpenAI.
-export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #Or other keys compatible with OpenAI.
+**Configure AI parameters:**
 
-# run playbook in debug mode:
-export AIANSIBLE_LANG=EN
-export ANSIBLE_CONFIG=./ansible.cfg
-ansible-playbook  --become  -i  inventory/mycluster/inventory.ini  cluster.yml
+If not set, there will be no AI prompt feature,
+
+**Use a configuration file (recommended)**
 ```
+openai:
+  api_key: https://api.moonshot.cn/v1 
+  api_url: your_openai_api_url_here
+  model: moonshot-v1-8k
+```
+
+**Or use environment variables to configure AI**
+```
+export OPENAI_API_URL=https://api.moonshot.cn/v1   #or any other compatible OpenAI API address
+export OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx #or any other compatible OpenAI key
+export OPENAI_MODEL=moonshot-v1-8k #or any other compatible OpenAI model name
+```
+
+
 ![Alt text](image-1.png)
 
 ### edit mode:support emacs-mode or vim-mode, default is emacs-mode
