@@ -304,7 +304,7 @@ class CallbackModule(CallbackBase):
 
     # 打印代码的函数，它调用read_code_from_file并使用print_lines打印结果
     # print_code
-    def display_lines_from_file(self, file_path, start_line, color=None):
+    def print_code(self, file_path, start_line, color=None):
         lines = self.read_code_from_file(file_path, start_line)
         for line_number, line in lines:
             if line.strip() == "":
@@ -461,7 +461,7 @@ class CallbackModule(CallbackBase):
         #    msg=f"Displaying 10 lines starting from line {lineno}:"
         # )
         self._display.display(msg="\n```", color=C.COLOR_DEBUG)
-        self.display_lines_from_file(path, lineno, C.COLOR_DEBUG)
+        self.print_code(path, lineno, C.COLOR_DEBUG)
         # self._display.display("File not in cache, getting or creating: %s" % path)
         self._display.display(msg="```\n\n", color=C.COLOR_DEBUG)
 
