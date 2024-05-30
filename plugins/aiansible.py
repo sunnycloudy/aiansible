@@ -156,14 +156,6 @@ class CallbackModule(CallbackBase):
 
     def get_comment_prompt(self):
 
-        if self.aiansible_lang == "CN":
-            return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
-        elif self.aiansible_lang == "EN":
-            return "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code.  (Note: No additional explanation is needed except for this):"
-        else:
-            return "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):"
-
-    def get_ask_prompt(self):
         type_prompt = """\n请返回类似如下格式的回复:
 [代码和注释:]
 11|    - name: "Check {{ minimal_ansible_version }} <= Ansible version < {{ maximal_ansible_version }}"  # 任务名称，用于检查Ansible的版本是否在指定的范围内
@@ -187,6 +179,25 @@ class CallbackModule(CallbackBase):
 17|      tags: # Tags are used to categorize tasks, which can be useful for selective execution.
 18|        - check # The task is tagged with 'check', which can be used to run only this task or a group of tasks with this tag.
 """
+
+        if self.aiansible_lang == "CN":
+            return (
+                "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):",
+                type_prompt,
+            )
+        elif self.aiansible_lang == "EN":
+            return (
+                "用英文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):",
+                en_type_prompt,
+            )
+            # return "In English, maintain the original format and line numbers of the code, show the code, and add comments after each line of code.  (Note: No additional explanation is needed except for this):"
+        else:
+            return (
+                "用中文, 在每行代码后的同一行内, 注释一下如下代码(注意:除此之外,不需要额外说明 ):",
+                type_prompt,
+            )
+
+    def get_ask_prompt(self):
 
         if self.aiansible_lang == "CN":
             return "请根据当前ansible任务:", "回答如下问题:"
@@ -443,10 +454,11 @@ class CallbackModule(CallbackBase):
 
     def comment_code(self, lines_with_number):
         print("asking ai...")
-        msg = self.get_comment_prompt()
+        msg, type = self.get_comment_prompt()
         for line_number, line in lines_with_number:
             line_number_info = f"{line_number+1}".rjust(5, " ") + "|"
             msg += line_number_info + line
+        msg += "\n" + type
 
         print(colorize_code(self.chat(msg, self.chat_history)))
 
